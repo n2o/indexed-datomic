@@ -1,18 +1,25 @@
 version: '3.1'
-
 services:
-  # elastic:
-  #   image: elasticsearch:5-alpine
-  #   volumes:
-  #     # - ./elastic/config:/usr/share/elasticsearch/config
-  #     - ./elastic/esdata:/usr/share/elasticsearch/data
-  #   ports:
-  #     - "9200:9200"
-  #     - "9300:9300"
+  elastic:
+    image: elasticsearch:5-alpine
+    volumes:
+      # - ./elastic/config:/usr/share/elasticsearch/config
+      - ./elastic/esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   db:
     build: db
     ports:
       - "8998:8998"
     env_file:
       - development.env
-  
+  api:
+    build: api
+    ports:
+      - "7777:7777"
+    env_file:
+      - development.env
+    volumes:
+      - ./api:/app
+      - ~/.m2:/root/.m2
